@@ -4,8 +4,9 @@ import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import StatusBar from './StatusBar';
 import ActionButton from './ActionButton';
-import ListItem from './ListItem';
 import styles from '../styles';
+import ListItem from './ListItem';
+
 const {
   AsyncStorage,
   ListView,
@@ -18,15 +19,17 @@ const {
   Alert
 } = ReactNative;
 
-class FindTool extends Component {
+class AllTools extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      cates: [],
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       })
     };
     this.itemsRef = this.getRef().child('items');
+    this.cateRef = this.getRef().child('categories');
   }
   async userLogout() {
     try {
@@ -40,14 +43,51 @@ class FindTool extends Component {
   getRef() {
     return firebase.database().ref();
   }
-  listenForItems(itemsRef) {
-    itemsRef.on('value', (snap) => {
-
+  listenForItems(cateRef) {
+    cateRef.on('value', (snap) => {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
         items.push({
-          title: child.val().title,
+          name: child.val().name,
+          _key: child.key
+        });
+      });
+      this.setState({
+        cates: items
+      });
+    });
+  }
+  componentDidMount() {
+    this.listenForItems(this.cateRef);
+  }
+  render() {
+    return (
+      <KeyboardAvoidingView style={styles.listContainer} behavior="padding" >
+        <StatusBar onPress={this.userLogout.bind(this)} title="Tools Near Me" />
+        <ListView style={styles.listWrapper}
+          dataSource={this.state.dataSource}
+          renderRow={this._renderItem.bind(this)}
+          enableEmptySections={true}
+        />
+        <View style={styles.cateWrapper}>
+        {this.state.cates.map(button => (
+          <ActionButton onPress={this.filterTools.bind(this, button._key)} title={button.name} />
+        ))}
+        </View>
+      </KeyboardAvoidingView>
+
+
+    )
+  }
+
+  filterTools(key) {
+    this.itemsRef.child(key).once('value', (snap) => {
+      // get children as an array
+      var items = [];
+      snap.forEach((child) => {
+        items.push({
+          title: child.val().name,
           _key: child.key
         });
       });
@@ -58,28 +98,32 @@ class FindTool extends Component {
 
     });
   }
-  componentDidMount() {
-    this.listenForItems(this.itemsRef);
-  }
-  render() {
-    return (
-      <KeyboardAvoidingView style={styles.listContainer} behavior="padding" >
-        <StatusBar onPress={this.userLogout.bind(this)} title="Tools Near Me" />
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this._renderItem.bind(this)}
-          enableEmptySections={true}
-          style={styles.listview}/>
-        <TextInput
-          style={{height: 40}}
-          placeholder="Type here to add!"
-          onChangeText={(text) => this.setState({text})}
-        />
-        <ActionButton onPress={this._addItem.bind(this)} title="Add tool" />
 
-      </KeyboardAvoidingView>
-    )
+  _listItemGardening() {
+    Alert.alert('Pressed!');
+    Actions.ListItemGardening();
   }
+
+  _listItemElectrical() {
+    Alert.alert('Pressed!');
+    Actions.ListItemElectrical();
+  }
+
+  _listItemPlumbing() {
+    Alert.alert('Pressed!');
+    Actions.ListItemPlumbing();
+  }
+
+  _listItemInterior() {
+    Alert.alert('Pressed!');
+    Actions.ListItemInterior();
+  }
+
+  _listItemOther() {
+    Alert.alert('Pressed!');
+    Actions.ListItemOther();
+  }
+
   _addItem() {
     this.itemsRef.push({ title: this.state.text });
   }
@@ -101,4 +145,4 @@ class FindTool extends Component {
     );
   }
 }
-module.exports = HomePage;
+module.exports = AllTools;

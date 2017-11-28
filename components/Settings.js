@@ -4,8 +4,9 @@ import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import StatusBar from './StatusBar';
 import ActionButton from './ActionButton';
-import ListItem from './ListItem';
 import styles from '../styles';
+import ListItem from './ListItem';
+
 const {
   AsyncStorage,
   ListView,

@@ -13,6 +13,7 @@ var styles = StyleSheet.create({
   },
   listContainer: {
     backgroundColor: '#FF7F50',
+    flexDirection: 'column',
     flex: 1
   },
   listview: {
@@ -62,18 +63,19 @@ var styles = StyleSheet.create({
   },
   actionText: {
     color: '#fff',
-    fontSize: 35,
+    fontSize: 15,
     textAlign: 'center',
     paddingTop: 50,
   },
   action: {
+    flex: 1,
     backgroundColor: '#444',
     borderColor: '#FF7F50',
     borderWidth: 1,
     height: 170,
-    paddingLeft: 16,
-    paddingTop: 14,
-    paddingBottom: 16,
+    paddingLeft: 2,
+    paddingTop: 2,
+    paddingBottom: 2,
   },
   form: {
     backgroundColor: '#FF7F50'
@@ -113,6 +115,14 @@ var styles = StyleSheet.create({
   },
   alignRight: {
     flex: 1
+  },
+  cateWrapper:{
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  listWrapper:{
+    flex: 5
   }
 })
 module.exports = styles

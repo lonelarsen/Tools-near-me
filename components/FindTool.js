@@ -4,8 +4,9 @@ import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import StatusBar from './StatusBar';
 import ActionButton from './ActionButton';
-import ListItem from './ListItem';
 import styles from '../styles';
+import ListItem from './ListItem';
+
 const {
   AsyncStorage,
   ListView,
@@ -65,21 +66,38 @@ class FindTool extends Component {
     return (
       <KeyboardAvoidingView style={styles.listContainer} behavior="padding" >
         <StatusBar onPress={this.userLogout.bind(this)} title="Tools Near Me" />
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this._renderItem.bind(this)}
-          enableEmptySections={true}
-          style={styles.listview}/>
-        <TextInput
-          style={{height: 40}}
-          placeholder="Type here to add!"
-          onChangeText={(text) => this.setState({text})}
-        />
-        <ActionButton onPress={this._addItem.bind(this)} title="Add tool" />
+
+        <ActionButton onPress={this._findTool.bind(this)} title="Find tool" />
+        <ActionButton onPress={this._allTools.bind(this)} title="All tools" />
+        <ActionButton onPress={this._createAd.bind(this)} title="Create ad" />
+        <ActionButton onPress={this._settings.bind(this)} title="Settings" />
 
       </KeyboardAvoidingView>
+
+
     )
   }
+
+  _findTool() {
+    Alert.alert('Pressed!');
+    Actions.FindTool();
+  }
+
+  _allTools() {
+    Alert.alert('Pressed!');
+    Actions.AllTools();
+  }
+
+  _createAd() {
+    Alert.alert('Pressed!');
+    Actions.CreateAd();
+  }
+
+  _settings() {
+    Alert.alert('Pressed!');
+    Actions.Settings();
+  }
+
   _addItem() {
     this.itemsRef.push({ title: this.state.text });
   }
@@ -101,4 +119,4 @@ class FindTool extends Component {
     );
   }
 }
-module.exports = HomePage;
+module.exports = FindTool;

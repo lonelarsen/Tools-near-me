@@ -4,8 +4,9 @@ import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import StatusBar from './StatusBar';
 import ActionButton from './ActionButton';
-import ListItem from './ListItem';
 import styles from '../styles';
+import ListItem from './ListItem';
+
 const {
   AsyncStorage,
   ListView,
@@ -18,7 +19,7 @@ const {
   Alert
 } = ReactNative;
 
-class FindTool extends Component {
+class CreateAd extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -101,4 +102,4 @@ class FindTool extends Component {
     );
   }
 }
-module.exports = HomePage;
+module.exports = CreateAd;

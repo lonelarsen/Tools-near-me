@@ -4,6 +4,15 @@ import {Router, Scene} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import Authentication from './components/Authentication';
 import HomePage from './components/HomePage';
+import FindTool from './components/FindTool';
+import CreateAd from './components/CreateAd';
+import AllTools from './components/AllTools';
+// import ListItem from './components/ListItem';
+// import ListItemPlumbing from './components/ListItemPlumbing';
+// import ListItemElectrical from './components/ListItemElectrical';
+// import ListItemInterior from './components/ListItemInterior';
+// import ListItemOther from './components/ListItemOther';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDLFqPZEXt-878mrC_0cq0h7agCJk-hxkY",
@@ -51,7 +60,28 @@ export default class App extends Component {
               key='HomePage'
               title='Home Page'
             />
-          </Scene>
+          <Scene
+            component={FindTool}
+            hideNavBar={true}
+            initial={this.state.hasToken}
+            key='FindTool'
+            title='Find Tool'
+          />
+          <Scene
+            component={CreateAd}
+            hideNavBar={true}
+            initial={this.state.hasToken}
+            key='CreateAd'
+            title='Create Ad'
+          />
+          <Scene
+            component={AllTools}
+            hideNavBar={true}
+            initial={this.state.hasToken}
+            key='AllTools'
+            title='All Tools'
+          />
+        </Scene>
         </Router>
       );
     }
